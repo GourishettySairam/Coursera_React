@@ -5,32 +5,38 @@ class DishDetail extends Component {
 
     constructor(props) {
         super(props);
-
     }
 
-    renderComments(comments) {
-  if (comments != null) {
-    let options = { year: "numeric", month: "short", day: "numeric" };
-    return comments.map(comment => (
-      <ul key={comment.id} className="list-unstyled">
-        <li className="mb-2">{comment.comment}</li>
-        <li>
-          -- {comment.author}{" "}
-          {new Date(comment.date).toLocaleDateString("en-US", options)}
-        </li>
-      </ul>
-    ));
-  } else return <div />;
-}
+
+        renderComments(comments) {
+
+      if (comments != null) {
+        let options = { year: "numeric", month: "short", day: "numeric" };
+        return comments.map(comment => (
+          <ul key={comment.id} className="list-unstyled">
+            <li className="mb-2">{comment.comment}</li>
+            <li className="mb-2">{comment.rating} stars</li>
+            <li>
+              -- {comment.author}{" "}
+              {new Date(comment.date).toLocaleDateString("en-US", options)}
+            </li>
+          </ul>
+        ));
+      } else return <div />;
+    }
 
   render()
   {
-    const { dish } = this.props;
+    const  dish =this.props.dish;
+    if(dish!=null){
+    console.log(dish.id)
+    //console.log(this.props);
     return (
+      <div className="container">
       <div className="row">
         <div className="col-12 col-md-5 m-1">
           <Card>
-            <CardImg top src={dish.image} alt={dish.name} />
+            <CardImg  top src={dish.image}  alt={dish.name} />
             <CardBody>
               <CardTitle>{dish.name}</CardTitle>
               <CardText>{dish.description}</CardText>
@@ -42,7 +48,14 @@ class DishDetail extends Component {
           {this.renderComments(dish.comments)}
         </div>
       </div>
-    );
+      </div>
+    )
+  }
+  else {
+    {
+      return <div></div>
+    }
+  }
   }
 
 
